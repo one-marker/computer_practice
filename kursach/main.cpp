@@ -7,7 +7,7 @@ using namespace std;
 const int n = 5;
 const int h = 1000;
 const int k = 100;
-const int len = n*h*k;
+const int len = 100;
 
 float f1(float);
 float f2(float);
