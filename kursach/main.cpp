@@ -29,6 +29,37 @@ float M(float* array, int index) {
 
     return m/K;
 }
+float D(float* array, int index, float M) {
+    float d = 0;
+
+    for (size_t i = index; i < index + K; i++)
+    {
+        d += (array[index] - M) * (array[index] - M);
+    }
+
+    return d / K;
+}
+
+float Min(float* array, int index) {
+    float min = 0;
+
+    for (size_t i = index; i < index + K; i++)
+        if (array[i] < min)
+            min = array[i];
+
+    return min;
+}
+
+float Max(float* array, int index) {
+    float max = 0;
+
+    for (size_t i = index; i < index + K; i++)
+        if (array[i] > max)
+            max = array[i];
+
+    return max;
+}
+
 struct Result {
     float max = 0;
     float min = 0;
@@ -60,14 +91,16 @@ int main() {
             cout << n << endl;
             cout << i << " mod 1000" << endl;
             cout << "M = " << M(sorv, i) << endl;
-            
+            cout << "D = " << D(sorv, i, M(sorv, i)) << endl;
 
 
             ///Место для функций 1. 3.
+           
             results[n].M = M(sorv, i); //Среднее
-            results[n].D = M(sorv, i);  //Дисперсию найти
-            results[n].max = M(sorv, i); //Max найти
-            results[n].min = M(sorv, i);  //Min найти
+            results[n].D = D(sorv, i, M(sorv, i));  //Дисперсию найти
+
+            results[n].max = Max(sorv, i); //Max найти
+            results[n].min = Min(sorv, i);  //Min найти
 
             //пердавать в функцию указатель на массив и индекс с которого начинать производичть вычисления;
             //при прохождении массива Ваш цикл должен начинать с i, а заканчиваться на i+K;
