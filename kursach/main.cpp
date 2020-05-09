@@ -1,7 +1,11 @@
 #include <iostream>
 #include <stdio.h>      /* printf, NULL */
 #include <stdlib.h>     /* srand, rand */
-#include <time.h>    
+#include <time.h>   
+#define K 100
+#define H 1000
+#define N 5
+#define SIZE 100000
 using namespace std;
 
 const int n = 5;
@@ -13,57 +17,126 @@ float f1(float);
 float f2(float);
 int choice(int, int);
 float xi(float);
-void printArray(float *,int);
+void printArray(float*, int);
 
 float a = 0.2;
 float b = 2;
 
+float M(float* array, int index) {
+    float m = 0;
 
-int main(){ 
-    
-    //ПОСЛЕДОВАТЕЛЬНОСТЬ СЛУЧАНЫХ ВЕЛИЧИН
-    float *array = new float[len];
+    for (size_t i = index; i < index + k; i++)
+    {
+        m += array[index];
+    }
+
+    return m/K;
+}
+struct Result {
+    float max = 0;
+    float min = 0;
+    float M = 0;
+    float D = 0;
+};
+
+int main() {
+    Result* results = new Result[N];
+    //ПОСЛЕДОВАТЕЛЬНОСТЬ СЛУЧАНЫХ ВЕЛИЧИН 
+    //sequence of random variables SORV
+    float* sorv = new float[SIZE];
     float tmp = xi(0);
-    array[0] = tmp;
+    sorv[0] = tmp;
 
-    for (size_t i = 1; i < len; i++)
-        array[i] = xi(array[i-1]);
-    
-    printArray(array, len);
-    
+    for (size_t i = 1; i < SIZE; i++)
+        sorv[i] = xi(sorv[i - 1]);
+
+    //printArray(sorv, SIZE);
+
+     
+    int n = 0;
+    int i = 0;
+   
+    while (n != N && i < SIZE)
+    {
+        if (i % H == 0)
+        {
+            cout << n << endl;
+            cout << i << " mod 1000" << endl;
+            cout << "M = " << M(sorv, i) << endl;
+            ///Место для функций 1. 3.
+            results[n].M = M(sorv, i); //Среднее
+            results[n].D = M(sorv, i);  //Дисперсию найти
+            results[n].max = M(sorv, i); //Max найти
+            results[n].min = M(sorv, i);  //Min найти
+
+            //пердавать в функцию указатель на массив и индекс с которого начинать производичть вычисления;
+            //при прохождении массива Ваш цикл должен начинать с i, а заканчиваться на i+K;
+
+
+
+            i += K;
+            n++;
+          
+        }
+        i++;
+    }
+
+
+    cout << results[0].M << endl;
+
+    cout << "\nRESULTS:" << endl;
+    cout << "------------------" << endl;
+
+    for (size_t i = 0; i < N; i++)
+    {    
+        cout << "n = " << i+1 << endl;
+        cout << "Max: " << results[n].max << endl;
+        cout << "Min: " << results[n].min << endl;
+        cout << "M: " << results[n].M << endl;
+        cout << "D: " << results[n].D << endl;
+        cout << "------------------" << endl;
+        
+        results[i];
+    }
+
+
     return 0;
+
+
+
+
 }
 
-void printArray(float *array, int len){
+void printArray(float* array, int len) {
     cout << "Array: " << endl;
     for (size_t i = 0; i < len; i++)
         cout << array[i] << endl;
-    
-    
+
+
 }
 
-float xi(float old){
+float xi(float old) {
 
     float xi;
-    
-    switch (choice(10,40)){
-        case 1:
-            xi = f1(old);
-            break;
-        case 2:
-            xi = f2(old);
-            break;
-        default:
-            break;
+
+    switch (choice(10, 40)) {
+    case 1:
+        xi = f1(old);
+        break;
+    case 2:
+        xi = f2(old);
+        break;
+    default:
+        break;
     }
 
     return xi;
 }
 
-int choice(int p1, int p2){
-    
+int choice(int p1, int p2) {
+
     int s = p1 + p2;
-   
+
     int random = rand() % s + 1;
     //cout << random << endl;
 
@@ -71,18 +144,14 @@ int choice(int p1, int p2){
         return 1;
     else
         return 2;
-    
-    
-    
-
 }
 
-float f1(float x){
+float f1(float x) {
     //cout << "function 1" << endl;
     return x + a;
 }
 
-float f2(float x){
+float f2(float x) {
     //cout << "function 2" << endl;
-    return x/b + 0.5 * (1 - (1/b));
+    return x / b + 0.5 * (1 - (1 / b));
 }
