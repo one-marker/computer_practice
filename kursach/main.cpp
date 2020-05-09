@@ -8,10 +8,7 @@
 #define SIZE 100000
 using namespace std;
 
-const int n = 5;
-const int h = 1000;
-const int k = 100;
-const int len = 100;
+
 
 float f1(float);
 float f2(float);
@@ -25,7 +22,7 @@ float b = 2;
 float M(float* array, int index) {
     float m = 0;
 
-    for (size_t i = index; i < index + k; i++)
+    for (size_t i = index; i < index + K; i++)
     {
         m += array[index];
     }
@@ -63,6 +60,9 @@ int main() {
             cout << n << endl;
             cout << i << " mod 1000" << endl;
             cout << "M = " << M(sorv, i) << endl;
+            
+
+
             ///Место для функций 1. 3.
             results[n].M = M(sorv, i); //Среднее
             results[n].D = M(sorv, i);  //Дисперсию найти
@@ -90,13 +90,12 @@ int main() {
     for (size_t i = 0; i < N; i++)
     {    
         cout << "n = " << i+1 << endl;
-        cout << "Max: " << results[n].max << endl;
-        cout << "Min: " << results[n].min << endl;
-        cout << "M: " << results[n].M << endl;
-        cout << "D: " << results[n].D << endl;
+        cout << "Max: " << results[i].max << endl;
+        cout << "Min: " << results[i].min << endl;
+        cout << "M: " << results[i].M << endl;
+        cout << "D: " << results[i].D << endl;
         cout << "------------------" << endl;
         
-        results[i];
     }
 
 
