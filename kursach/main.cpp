@@ -68,6 +68,7 @@ float mod (float value){
         return value;
     
 }
+
 struct Result {
     float max;
     float min;
@@ -126,7 +127,7 @@ int main() {
     }
 
 
-    cout << results[0].M << endl;
+   // cout << results[0].M << endl;
 
     cout << "\nRESULTS:" << endl;
     cout << "------------------" << endl;
@@ -143,9 +144,11 @@ int main() {
         
     }
 
+    
+    delete[] sorv;
+    delete[] results;
 
-
-
+    
    
     return 0;
 
@@ -168,14 +171,14 @@ float xi(float old) {
     float xi;
 
     switch (choice(10, 40)) {
-    case 1:
-        xi = f1(old);
-        break;
-    case 2:
-        xi = f2(old);
-        break;
-    default:
-        break;
+        case 1:
+            xi = f1(old);
+            break;
+        case 2:
+            xi = f2(old);
+            break;
+        default:
+            break;
     }
 
     return xi;
