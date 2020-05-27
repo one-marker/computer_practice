@@ -42,7 +42,7 @@ float D(float* array, int index, float M) {
 }
 
 float Min(float* array, int index) {
-    float min = 1;
+    float min = array[0];
 
     for (size_t i = index; i < index + K; i++)
         if (array[i] < min)
